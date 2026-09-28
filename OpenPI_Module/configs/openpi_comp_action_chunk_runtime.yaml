@@ -1,0 +1,53 @@
+paths:
+  checkpoint_dir: ../model_bundles/pi05_origami_comp_action_chunk_phase3
+  tokenizer_model_path: ../assets/paligemma_tokenizer.model
+  asset_id: competition_paper_reprocessed_origami_comp_action_chunk_phase3
+openpi:
+  config_name: pi05_origami_comp_action_chunk_phase3
+  vendored_source_root: ../../vendor/openpi/src
+  source_config_file: vendor/openpi/src/openpi/training/config.py
+  model:
+    class: Pi0Config
+    pi05: true
+    action_dim: 65
+    state_dim: 65
+    action_horizon: 25
+    max_token_len: 768
+    discrete_state_input: true
+    origami_vla:
+      enabled: true
+      action_mode: action_chunk
+      belief_dim: 29
+      history_dim: 512
+      tactile_dim: 60
+      tactile_prompt_input: true
+      prompt_discrete_clip: true
+      tactile_enabled: false
+      ftp_tactile_enabled: true
+      ftp_tactile_branch: auto
+      ftp_tactile_image_size: 224
+      ftp_tactile_prefix_dim: 2048
+      ftp_tactile_tokens_per_finger: 4
+      ftp_tactile_hands: 2
+      ftp_tactile_fingers_per_hand: 5
+      ftp_tactile_freeze_backbone: true
+  data:
+    action_chunk_stride: 1
+    phase3_mixed_speed_enabled: true
+    phase3_prompt_template: "Fold paper into airplane. Speed: {speed}x."
+prompt: "Fold paper into airplane. Speed: 1x."
+runtime:
+  policy_sample_steps: 10
+  openpi_param_dtype: bfloat16
+  random_seed: 0
+input:
+  image_size: 224
+  state_dim: 65
+  action_dim: 65
+  action_horizon: 25
+  tactile_dim: 60
+  tactile_image_size: 224
+  tolerate_invalid_optional_raw: true
+  raw_zero_is_unavailable: true
+output:
+  require_finite_actions: true

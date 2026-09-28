@@ -1,0 +1,17 @@
+.git/
+**/.pytest_cache/
+**/__pycache__/
+**/*.py[cod]
+**/.DS_Store
+
+outputs/
+model_bundle/outputs/
+
+# Phase-3 never constructs DINO, OOI, or the external checkpoint planner.
+# Excluding their source prevents accidental runtime coupling in the image.
+Checkpoint_Planner_Module/
+OOI_Module/
+vendor/openpi_phase2_h25_s1/
+
+*.log
+*.tmp

@@ -1,0 +1,40 @@
+# Standalone development/replay configuration. Docker serving uses
+# model_bundle/bundle.yaml instead.
+paths:
+  dataset_root: ../../Competition_Paper_Reprocessed_Dataset
+  output_dir: ../outputs/dataset_replay
+  openpi_runtime_config: ../OpenPI_Module/configs/openpi_comp_action_chunk_runtime.yaml
+runtime:
+  device: cuda:0
+  precision: fp16
+  camera_image_size: 224
+  planner_enabled: false
+  planner_feature_mode: selected_branch_raw_no_continuity
+  planner_value_variant: raw
+  planner_uncertainty_source: raw
+  planner_timestamp_source: step_index
+server:
+  policy_name: origami_comp_action_chunk
+  action_horizon: 25
+  action_dim: 65
+  execution_mode: sync
+  warmup_inferences: 1
+  require_prompt: false
+  allow_observation_timestamp: true
+  tolerate_invalid_optional_raw: true
+  log_inference_requests: true
+  log_inference_every_n: 1
+phase3:
+  prompt_template: "Fold paper into airplane. Speed: {speed}x."
+  allowed_speeds: [1, 2]
+dataset_replay:
+  prompt: "Fold paper into airplane. Speed: {speed}x."
+  action_horizon: 25
+  action_chunk_stride: 1
+  step_stride: 10
+  phase_offsets: []
+  tactile_modes: [deform_only, deform_plus_raw]
+  require_raw_for_deform_plus_raw: true
+  compute_action_error: true
+  compute_training_loss: true
+  include_dataset_timestamps: true

@@ -1,0 +1,28 @@
+# Compatibility alias: Phase-3 is always planner-off.
+paths:
+  dataset_root: ../../Competition_Paper_Reprocessed_Dataset
+  output_dir: ../outputs/dataset_replay
+  openpi_runtime_config: ../OpenPI_Module/configs/openpi_comp_action_chunk_runtime.yaml
+runtime:
+  device: cuda:0
+  precision: fp16
+  camera_image_size: 224
+  planner_enabled: false
+  planner_feature_mode: selected_branch_raw_no_continuity
+  planner_value_variant: raw
+  planner_uncertainty_source: raw
+  planner_timestamp_source: step_index
+server:
+  policy_name: origami_comp_action_chunk
+  action_horizon: 25
+  action_dim: 65
+  execution_mode: sync
+  require_prompt: false
+phase3:
+  prompt_template: "Fold paper into airplane. Speed: {speed}x."
+  allowed_speeds: [1, 2]
+dataset_replay:
+  prompt: "Fold paper into airplane. Speed: {speed}x."
+  action_horizon: 25
+  action_chunk_stride: 1
+  tactile_modes: [deform_only, deform_plus_raw]
